@@ -40,8 +40,8 @@ with open('config/housing.yaml') as f:
     monthly_interest = []
     monthly_principal = []
     monthly_payment = []
-    latest_interest = current_interest
-    latest_principal = loanable_amount
+    ending_interest = current_interest
+    ending_principal = loanable_amount
     # Payment = P x (r / n) x (1 + r / n)^n(t)] / (1 + r / n)^n(t) - 1
     total_paid = loanable_amount * (current_interest_rate / 12) \
         * ((1 + current_interest_rate / 12)**total_period) / ((1 + current_interest_rate / 12)**(total_period) - 1)
@@ -65,7 +65,7 @@ with open('config/housing.yaml') as f:
             print(f"Principle paid: {(this_year_principle):.2f}")
             print(f"Interest paid: {(this_year_interest):.2f}")
             print(f"Adjusted monthly payment is {total_paid} at interest rate of {current_interest_rate}")
-            show_month_payment(starting_year, latest_principal, monthly_principal[-12:], monthly_interest[-12:])
+            show_month_payment(starting_year, ending_principal, monthly_principal[-12:], monthly_interest[-12:])
 
             if period == 0:
                 from prettytable import PrettyTable
@@ -97,10 +97,10 @@ with open('config/housing.yaml') as f:
             # revise payment every year
             # Payment = P x (r / n) x [(1 + r / n)^n(t)] / [(1 + r / n)^n(t) - 1]
             current_interest_rate = current_interest_rate + adjust_interest_per_anum
-            total_paid = latest_principal * (current_interest_rate / 12) \
+            total_paid = ending_principal * (current_interest_rate / 12) \
                 * ((1 + current_interest_rate / 12)**period) / ((1 + current_interest_rate / 12)**(period) - 1)
 
-        this_interest = latest_interest
+        this_interest = ending_principal * current_interest_rate / 12
         this_principal = total_paid - this_interest
         full_amount_paid += this_interest + this_principal
 
@@ -110,10 +110,10 @@ with open('config/housing.yaml') as f:
 
         period -= 1
 
-        latest_principal = latest_principal - this_principal
-        latest_interest = latest_principal * current_interest_rate / 12
+        ending_principal = ending_principal - this_principal
+        ending_interest = this_interest
 
-    print(f"\nLeft Loan Amount: {latest_principal:.2f}")
+    print(f"\nLeft Loan Amount: {ending_principal:.2f}")
     print(f"Total paid is: {full_amount_paid}")
 
 
