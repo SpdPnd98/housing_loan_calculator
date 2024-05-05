@@ -3,7 +3,6 @@ import json
 import yaml
 import math
 
-# TODO: change to be show monthly payment, currently it only prettifies the amount to show when called.
 def show_month_payment(starting_year, ending_principle, paid_mothly_principle, paid_monthly_interest):
     ending_principle += sum(paid_mothly_principle)
     for month_number, (paid_principle, paid_interest) in enumerate(zip(paid_mothly_principle, paid_monthly_interest)):
