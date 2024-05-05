@@ -71,7 +71,7 @@ with open('config/housing.yaml') as f:
                 from prettytable import PrettyTable
                 import calendar
 
-                with open(f'{adjust_interest_per_anum}_{total_period}_{loanable_amount}_{data["export_data"]["destination"]["monthly"]}', 'w+') as f:
+                with open(f'{adjust_interest_per_anum}_{data["house"]["loan_period"]}y_{loanable_amount}_{data["export_data"]["destination"]["monthly"]}', 'w+') as f:
                     table = PrettyTable()
                     table.field_names= ["Month, Year", "Payment", "Paid Principle", "Paid Interest", "Loan Remaining"]
                     current_principle_remaining = loanable_amount
@@ -84,7 +84,7 @@ with open('config/housing.yaml') as f:
                     f.write(table.get_string())
                     f.write(f"\nTotal paid: {total_paid}")
 
-                with open(f'{adjust_interest_per_anum}_{total_period}_{loanable_amount}_{data["export_data"]["destination"]["yearly"]}', 'w+') as f:
+                with open(f'{adjust_interest_per_anum}_{data["house"]["loan_period"]}y_{loanable_amount}_{data["export_data"]["destination"]["yearly"]}', 'w+') as f:
                     table = PrettyTable()
                     table.field_names= ["Year", "Payment", "Paid Principle", "Paid Interest", "Loan Remaining"]
                     current_principle_remaining = loanable_amount
