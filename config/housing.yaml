@@ -1,7 +1,6 @@
 house:
   price: 1000000
   loan_period: 35
-  type: "variable" # "fixed" or "variable"
   current_interest: 0.044 # percent convert to decimal places
   percentage_loan: 0.9 # percent convert to decimal places
   expected_annual_increment: 0.002 # percent convert to decimal
