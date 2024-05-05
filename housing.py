@@ -75,21 +75,27 @@ with open('config/housing.yaml') as f:
                     table = PrettyTable()
                     table.field_names= ["Month, Year", "Payment", "Paid Principle", "Paid Interest", "Loan Remaining"]
                     current_principle_remaining = loanable_amount
+                    total_paid = 0
                     for month, (pay, (p, i)) in enumerate(zip(monthly_payment, zip(monthly_principal, monthly_interest))):
                         current_principle_remaining -= p
                         table.add_row([f"{calendar.month_name[month%12 + 1]} {starting_year + math.floor(month / 12)}", "{:.2f}".format(pay), "{:.2f}".format(p), "{:.2f}".format(i), "{:.2f}".format(current_principle_remaining)])
+                        total_paid += pay
                     table.align["Month, Year"] = "r"
                     f.write(table.get_string())
+                    f.write(f"\nTotal paid: {total_paid}")
 
                 with open(f'{adjust_interest_per_anum}_{total_period}_{loanable_amount}_{data["export_data"]["destination"]["yearly"]}', 'w+') as f:
                     table = PrettyTable()
                     table.field_names= ["Year", "Payment", "Paid Principle", "Paid Interest", "Loan Remaining"]
                     current_principle_remaining = loanable_amount
+                    total_paid = 0
                     for year, (pay, (p, i)) in enumerate(zip(yearly_payment, zip(yearly_principle, yearly_interest))):
                         current_principle_remaining -= p
                         table.add_row([f"{starting_year + year}", "{:.2f}".format(pay), "{:.2f}".format(p), "{:.2f}".format(i), "{:.2f}".format(current_principle_remaining)])
+                        total_paid += pay
                     table.align["Month, Year"] = "r"
                     f.write(table.get_string())
+                    f.write(f"\nTotal paid: {total_paid}")
                 break
                 
 
